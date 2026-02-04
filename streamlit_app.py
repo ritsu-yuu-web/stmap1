@@ -85,7 +85,7 @@ def fetch_weather_data():
                 'City': city,
                 'lat': coords['lat'],
                 'lon': coords['lon'],
-                'Temperature': data['current']['temperature_2m']
+                'Temperature': data['current']['temperature_2m'],
                 'Time': data["current"]["time"]
             })
         except Exception as e:
