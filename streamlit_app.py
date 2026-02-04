@@ -100,6 +100,21 @@ with st.spinner('最新の気温データを取得中...'):
 # 気温を高さ（メートル）に変換（例：1度 = 3000m）
 df['elevation'] = df['Temperature'] * 3000
 
+#気温を色に変換
+def temp_to_color(temp):
+    if temp < 0:
+        return [0, 102, 255, 180]      # 濃い青
+    elif temp < 10:
+        return [102, 178, 255, 180]    # 水色
+    elif temp < 20:
+        return [102, 255, 178, 180]    # 緑寄りシアン
+    elif temp < 30:
+        return [255, 178, 102, 180]    # オレンジ
+    else:
+        return [255, 0, 0, 180]        # 赤
+
+df["color"] = df["Temperature"].apply(temp_to_color)
+
 # --- メインレイアウト ---
 col1, col2 = st.columns([1, 2])
 
@@ -129,7 +144,7 @@ with col2:
         get_position='[lon, lat]',
         get_elevation='elevation',
         radius=12000,        # 柱の太さ
-        get_fill_color='[255, 100, 0, 180]', # 柱の色（オレンジ系）
+        get_fill_color='color', # 柱の色（気温ごと）
         pickable=True,       # ホバーを有効に
         auto_highlight=True,
     )
@@ -143,3 +158,12 @@ with col2:
             "style": {"color": "white"}
         }
     ))
+    st.markdown("""
+    ### 🌡️ 気温カラー凡例
+    - 🔵 0℃未満  
+    - 🟦 0〜10℃  
+    - 🟩 10〜20℃  
+    - 🟧 20〜30℃  
+    - 🟥 30℃以上  
+    """)
+
