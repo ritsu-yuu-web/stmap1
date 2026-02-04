@@ -71,7 +71,7 @@ def fetch_weather_data():
     weather_info = []
     BASE_URL = 'https://api.open-meteo.com/v1/forecast'
     
-    for city, coords in kyushu_capitals.items():
+    for city, coords in japan_capitals.items():
         params = {
             'latitude':  coords['lat'],
             'longitude': coords['lon'],
